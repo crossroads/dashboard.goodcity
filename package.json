@@ -1,0 +1,41 @@
+{
+  "name": "dashboard.goodcity",
+  "version": "1.0.0",
+  "description": "A goodcity dashboard",
+  "main": "server.js",
+  "author": "Pat",
+  "license": "MIT",
+  "scripts": {
+    "serve": "node server.js",
+    "start": "npm run serve",
+    "build": "parcel build webapp/index.html --out-dir dist",
+    "dev": "NODE_ENV=development npm run serve"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "pocket-cms": "^1.0.12"
+  },
+  "devDependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.15",
+    "@fortawesome/free-solid-svg-icons": "^5.7.2",
+    "@fortawesome/vue-fontawesome": "^0.1.5",
+    "@vue/component-compiler-utils": "^2.5.0",
+    "apollo-boost": "^0.3.1",
+    "apollo-link-ws": "^1.0.17",
+    "apollo-utilities": "^1.2.1",
+    "element-ui": "^2.7.2",
+    "graphql": "^14.2.1",
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.23",
+    "parcel-bundler": "^1.12.3",
+    "sass": "^1.17.4",
+    "subscriptions-transport-ws": "^0.9.16",
+    "vue": "^2.6.10",
+    "vue-apollo": "^3.0.0-beta.28",
+    "vue-hot-reload-api": "^2.3.1",
+    "vue-router": "^3.0.2",
+    "vue-template-compiler": "^2.5.22",
+    "vuex": "^3.0.1"
+  }
+}
