@@ -11,7 +11,7 @@ To run the Hasura server on your local machine :
 ```bash
 #! /bin/bash
 docker run -d -p 8080:8080 \
-       -e HASURA_GRAPHQL_DATABASE_URL=postgres://postgres:@host.docker.internal:5432/from_staging \
+       -e HASURA_GRAPHQL_DATABASE_URL=postgres://postgres:@host.docker.internal:5432/goodcity_server_development \
        -e HASURA_GRAPHQL_ENABLE_CONSOLE=true \
        hasura/graphql-engine:latest
 ```
