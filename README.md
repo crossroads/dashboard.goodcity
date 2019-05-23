@@ -1,4 +1,4 @@
-# Goodcity Dashboard -- PROTOTYPE --
+# Goodcity Dashboard
 
 ## Prequisites
 
@@ -25,12 +25,6 @@ yarn install
 
 ```bash
 yarn build
-```
-
-## Running the server
-
-```bash
-yarn start
 ```
 
 ## Running in development mode (auto-reload)
