@@ -1,88 +1,61 @@
 <template>
   <div class="order-timeline">
-    <!-- <el-row :gutter="20" class="timeline">
-      <el-col :md="2" v-for="o in urgentOrders" :key="o.id" class="order">
-        <div> {{ o.code }} </div>
-        <div> {{ o.state | snakeToText }} </div>
-        <div> {{ o.order_transport.scheduled_at | timeString }} </div>
-      </el-col>
-    </el-row> -->
+    <h2> Today's orders ({{ sortedOrders.length }})</h2>
+
+    <!-- Timeline -->
     <el-timeline class="timeline">
       <el-timeline-item
-        v-for="(it, index) in upcomingOrders"
-        :type="it.type"
-        :key="it.order.id"
+        v-for="it in timeslots"
+        type="primary"
+        :key="it.time"
       >
-        <div class="order">
-          <div> {{ it.order.code }}</div>
-          <div class="tags">
-            <el-tag class="tag" :type="it.type">{{ it.order.order_transport.scheduled_at | timeString }}</el-tag>
-            <el-tag class="tag" :type="it.type">{{ it.order.state | snakeToText | capitalize }}</el-tag>
-          </div>
-        </div>
-      </el-timeline-item>
+        <!-- Title -->
+        <div :class="'time ' + it.urgency"> {{ it.time }}</div>
 
-      <el-timeline-item type="primary" v-if="hasMore">
-        <div class="order"> {{ unshownCount }} more... </div>
+        <!-- List of orders -->
+        <order-list :orders="it.orders" colors></order-list>
       </el-timeline-item>
     </el-timeline>
   </div>
 </template>
 
 <script>
-  import _ from 'lodash'
-  import moment from 'moment-timezone'
-  import { ACTIVE_STATES }  from '../constants'
-
-  const DISPLAY_COUNT = 5;
+  import _                  from 'lodash'
+  import moment             from 'moment-timezone'
+  import OrderList          from './OrderList'
+  import {
+    URGENCY_LEVELS,
+    getUrgency
+  } from '../utils/urgency';
 
   export default {
     props: [ 'orders' ],
     name: 'order-timeline',
-    methods: {
-      addHo(o) {
-
-      },
-      getType(o) {
-        let now = this.$clock.now;
-
-        const mapping = {
-          1: 'danger',
-          2: 'warning'
-        };
-
-        for (let h in mapping) {
-          let type = mapping[h];
-          let t = now.clone().add(h, 'hour');
-          let scheduledAt = moment(o.order_transport.scheduled_at).tz("Asia/Hong_Kong");
-          if (scheduledAt <= t) {
-            return type;
-          }
-        }
-        return 'primary';
-      }
+    components: {
+      OrderList
     },
     computed: {
-      openOrders() {
-        return _.filter(this.orders, o => {
-          return _.includes(ACTIVE_STATES, o.state);
-        })
+      sortedOrders() {
+        return _.sortBy(this.orders, 'order_transport.scheduled_at');
       },
-      hasMore() {
-        return this.openOrders.length - DISPLAY_COUNT > 0;
-      },
-      unshownCount() {
-        return this.openOrders.length - DISPLAY_COUNT;
-      },
-      upcomingOrders() {
-        return _.chain(this.openOrders)
-          .sortBy('order_transport.scheduled_at')
-          .slice(0, DISPLAY_COUNT)
-          .map(o => ({
-            order: o,
-            type: this.getType(o)
-          }))
-          .value();
+      timeslots() {
+        let slots = {};
+        _.each(this.sortedOrders, o => {
+          let scheduledAt = o.order_transport.scheduled_at;
+          let date = new Date(scheduledAt);
+          let time = moment(date).format('hh:mm A');
+
+          if (!slots[time]) {
+            slots[time] = {
+              time: time,
+              date: date,
+              orders: []
+            };
+          }
+
+          slots[time].orders.push(o);
+        });
+        return slots;
       }
     }
   }
@@ -94,13 +67,15 @@
   .timeline {
     font-weight: bold;
     font-size: 1.3rem;
-    .order {
-      color: $color-text-secondary;
-      .tags {
-        margin-top: 0.5rem;
-        .tag {
-          font-size: 1.1rem;
-        }
+    .time {
+      margin-bottom: 1rem;
+
+      &.danger {
+        color: $color-danger;
+      }
+
+      &.warning {
+        color: $color-warning;
       }
     }
   }

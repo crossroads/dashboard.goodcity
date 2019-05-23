@@ -1,0 +1,6 @@
+query {
+  booking_types {
+    id,
+    identifier
+  }
+}

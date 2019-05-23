@@ -35,7 +35,7 @@ const link = split(
 )
 
 // Create the apollo client
-const apolloClient = new ApolloClient({
+export const apolloClient = new ApolloClient({
   link,
   cache: new InMemoryCache(),
   connectToDevTools: config.env.name !== "production"
@@ -44,6 +44,8 @@ const apolloClient = new ApolloClient({
 // Install the vue plugin like before
 Vue.use(VueApollo)
 
-export default new VueApollo({
+export const apolloProvider = new VueApollo({
   defaultClient: apolloClient,
 });
+
+

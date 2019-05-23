@@ -11,11 +11,15 @@ Vue.filter("capitalize", (text) => {
 });
 
 Vue.filter("snakeToText", (text) => {
-  return text.replace(/ /g, " ");
+  return text.replace(/_/g, " ");
 });
 
 Vue.filter("timeString", (date) => {
   return moment(date).tz("Asia/Hong_Kong").format('hh:mm A');
+})
+
+Vue.filter("dateString", (date) => {
+  return moment(date).tz("Asia/Hong_Kong").format('MMMM Do');
 })
 
 Vue.filter("timeSince", (date) => {

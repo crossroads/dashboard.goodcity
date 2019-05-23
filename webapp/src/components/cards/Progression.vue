@@ -10,7 +10,9 @@
       {{ progression }}%
     </template>
     <template v-slot:footer>
-      <!-- ? -->
+      <div v-if="closedOrders.length > 0">
+        {{ closedOrders.length }} closed orders today
+      </div>
     </template>
   </gc-card>
 </template>
@@ -27,6 +29,9 @@
         return _.filter(this.orders, o => {
           return _.includes(ACTIVE_STATES, o.state);
         })
+      },
+      closedOrders() {
+        return _.filter(this.orders, ['state', 'closed'])
       },
       progression() {
         if (!this.orders || this.orders.length === 0) {

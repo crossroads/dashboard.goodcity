@@ -1,26 +1,40 @@
 <template>
   <div class='landing-page'>
     <h1> {{ $clock.dateString }} {{ $clock.timeString }} </h1>
-    <el-row :gutter="20">
+    <el-row :gutter="50">
 
       <!-- Timeline -->
-      <el-col :md="6">
+      <el-col :md="12">
         <order-timeline :orders="orders"></order-timeline>
       </el-col>
 
-      <!-- Open orders -->
-      <el-col :md="6">
-        <open-orders :orders="orders"></open-orders>
-      </el-col>
+      <el-col :md="12">
+        <!--Unconfirmed orders -->
+        <el-row :gutter="20">
+          <h2> Unconfirmed orders </h2>
+          <order-list
+            :orders="unconfirmedOrders"
+            :columns="[
+              'code',
+              'state',
+              'date',
+              'items'
+            ]"
+          ></order-list>
+        </el-row>
 
-      <!-- Closed orders -->
-      <el-col :md="6">
-        <closed-orders :orders="orders"></closed-orders>
-      </el-col>
-
-      <!-- Progression -->
-      <el-col :md="6">
-        <progression :orders="orders"></progression>
+        <el-row :gutter="20">
+          <h2> Orders to stage </h2>
+          <order-list
+            :orders="ordersToStage"
+            :columns="[
+              'code',
+              'state',
+              'date',
+              'items'
+            ]"
+          ></order-list>
+        </el-row>
       </el-col>
     </el-row>
 
@@ -28,20 +42,39 @@
 </template>
 
 <script>
-import { ACTIVE_STATES }  from '../constants'
-import orderQuery         from '../queries/landing.orders'
-import _                  from 'lodash'
-import OpenOrders         from '../components/cards/OpenOrders'
-import ClosedOrders       from '../components/cards/ClosedOrders'
-import Progression        from '../components/cards/Progression'
-import OrderTimeline      from '../components/OrderTimeline'
+import _                        from 'lodash'
+import orderQuery               from '../queries/landing/orders'
+import OpenOrders               from '../components/cards/OpenOrders'
+import Progression              from '../components/cards/Progression'
+import OrderTimeline            from '../components/OrderTimeline'
+import OrderList                from '../components/OrderList'
+import { mapActions}            from 'vuex'
+import {
+  STATES,
+  ACTIVE_STATES,
+  UNCONFIRMED_STATES
+} from '../constants'
 
 export default {
   components: {
     OpenOrders,
-    ClosedOrders,
     Progression,
-    OrderTimeline
+    OrderTimeline,
+    OrderList
+  },
+  mounted() {
+    this.loadBookingTypes();
+  },
+  methods: {
+    ...mapActions([ 'loadBookingTypes' ]),
+
+    isAppointment(order) {
+      return this.$store.getters.isAppointment(order);
+    },
+
+    isUnconfirmed(order) {
+      return _.includes(UNCONFIRMED_STATES, order.state);
+    }
   },
   apollo: {
     $loadingKey: 'loading',
@@ -53,6 +86,17 @@ export default {
         }
       }
     })
+  },
+  computed: {
+    unconfirmedOrders() {
+      return _.filter(this.orders, o => this.isUnconfirmed(o));
+    },
+    ordersToStage() {
+      return _.filter(this.orders, o => {
+        const isAppt = this.isAppointment(o);
+        return !isAppt && o.state === STATES.SCHEDULED;
+      });
+    }
   }
 }
 </script>
