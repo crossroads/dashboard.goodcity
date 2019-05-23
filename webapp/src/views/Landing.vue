@@ -23,6 +23,7 @@
           ></order-list>
         </el-row>
 
+        <!-- Orders to stage -->
         <el-row :gutter="20">
           <h2> Orders to stage </h2>
           <order-list

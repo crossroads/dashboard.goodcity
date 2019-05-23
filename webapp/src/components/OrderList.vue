@@ -87,7 +87,7 @@
       },
       orderType(order) {
         const isAppt = this.$store.getters.isAppointment(order);
-        
+
         if (isAppt) {
           return 'Appointment';
         }

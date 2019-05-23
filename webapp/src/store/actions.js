@@ -9,4 +9,4 @@ export default {
     commit('saveBookingTypes', data.booking_types);
   }
 
-}
+};

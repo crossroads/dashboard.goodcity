@@ -44,7 +44,7 @@
 
     .gc-card-body {
       padding: 30px 30px;
-    
+
       .text-area {
         text-align: right;
         color: $color-text-primary;

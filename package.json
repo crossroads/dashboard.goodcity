@@ -6,14 +6,10 @@
   "author": "Pat",
   "license": "MIT",
   "scripts": {
-    "serve": "node server.js",
-    "start": "npm run serve",
     "build": "parcel build webapp/index.html --out-dir dist",
-    "dev": "NODE_ENV=development npm run serve"
+    "dev": "parcel webapp/index.html --out-dir dist"
   },
   "dependencies": {
-    "express": "^4.16.4",
-    "pocket-cms": "^1.0.12"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.15",

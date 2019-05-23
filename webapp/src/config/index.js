@@ -3,7 +3,7 @@ import development from './development'
 import staging from './staging'
 import production from './production'
 
-const ENV = process.env.NODE_ENV
+const ENV = process.env.NODE_ENV || 'development';
 
 const DEFAULT_CONFIG = {
   endpoints: {
