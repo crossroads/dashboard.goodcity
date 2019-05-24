@@ -6,16 +6,17 @@ The goodcity dashboard uses GraphQL subscriptions to retrieve data and to live u
 
 We use a hasura server as our way of creating a GraphQL server from our Postgres database
 
-To run the Hasura server on your local machine :
+In order to run hasura on your local machine, you'll need to:
+* Install docker
+  * https://docs.docker.com/install/
 
-```bash
-#! /bin/bash
-docker run -d -p 8080:8080 \
-       -e HASURA_GRAPHQL_DATABASE_URL=postgres://postgres:@host.docker.internal:5432/goodcity_server_development \
-       -e HASURA_GRAPHQL_ENABLE_CONSOLE=true \
-       hasura/graphql-engine:latest
-```
-
+* Run the hasura docker container 
+  * Tutorial available here : https://docs.hasura.io/1.0/graphql/manual/deployment/docker/index.html
+  * A script is available in the `hasura/` folder with the run command as reference, it'll need to point to your local postgres instance
+  
+* Configure hasura
+  * Open the hasura dashboard (localhost:8080) and upload the `hasura/metadata`
+  * If any changes are made to the relationships, please export a new metadata file and replace the existing one
 
 ## Building the project
 
