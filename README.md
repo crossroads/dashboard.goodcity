@@ -1,5 +1,8 @@
 # Goodcity Dashboard
 
+[![forthebadge](https://forthebadge.com/images/badges/built-with-science.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/made-with-vue.svg)](https://forthebadge.com)
+
 ## Prequisites
 
 The goodcity dashboard uses GraphQL subscriptions to retrieve data and to live update.
