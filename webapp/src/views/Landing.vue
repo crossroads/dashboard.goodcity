@@ -45,8 +45,6 @@
 <script>
 import _                        from 'lodash'
 import orderQuery               from '../queries/landing/orders'
-import OpenOrders               from '../components/cards/OpenOrders'
-import Progression              from '../components/cards/Progression'
 import OrderTimeline            from '../components/OrderTimeline'
 import OrderList                from '../components/OrderList'
 import { mapActions}            from 'vuex'
@@ -58,8 +56,6 @@ import {
 
 export default {
   components: {
-    OpenOrders,
-    Progression,
     OrderTimeline,
     OrderList
   },
@@ -106,15 +102,6 @@ export default {
   .landing-page {
     .order-timeline {
       margin-top: 2rem;
-    }
-
-    .gc-card {
-      .content-area {
-        height: 5rem;
-      }
-      .footer {
-        height: 1.5rem;
-      }
     }
   }
 </style>

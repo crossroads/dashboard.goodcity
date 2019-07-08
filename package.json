@@ -2,15 +2,16 @@
   "name": "dashboard.goodcity",
   "version": "1.0.0",
   "description": "A goodcity dashboard",
-  "main": "server.js",
+  "main": "electron/run.js",
   "author": "Pat",
   "license": "MIT",
   "scripts": {
     "build": "parcel build webapp/index.html --out-dir dist",
-    "dev": "parcel webapp/index.html --out-dir dist"
+    "dev": "parcel webapp/index.html --out-dir dist",
+    "package": "electron-packager .",
+    "package:win": "electron-packager . --platform=win32 --arch=x64"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.15",
     "@fortawesome/free-solid-svg-icons": "^5.7.2",
@@ -22,6 +23,8 @@
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
     "babel-runtime": "^6.26.0",
+    "electron": "^5.0.6",
+    "electron-packager": "^14.0.0",
     "element-ui": "^2.7.2",
     "graphql": "^14.2.1",
     "lodash": "^4.17.11",

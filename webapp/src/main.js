@@ -12,7 +12,6 @@ import './styles/global.scss'
 import './filters'
 import './setup/fontawesome'
 import './setup/element'
-import './setup/components'
 
 moment.tz.setDefault('Asia/Hong_Kong');
 
