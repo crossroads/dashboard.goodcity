@@ -1,3 +1,5 @@
+hasura/deployment/hosts.yml
+
 # Logs
 dist
 .cache

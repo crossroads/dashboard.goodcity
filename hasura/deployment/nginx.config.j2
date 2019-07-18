@@ -1,0 +1,29 @@
+server {
+    server_name {{ SERVICE_URL }};
+
+    listen 443 ssl;
+
+    ssl_session_timeout   5m;
+    client_max_body_size 10M; # Max file upload size
+
+    location / {
+        {% for ip in ALLOWED_IPS %}
+        allow {{ ip }};
+        {% endfor %}
+        deny                all;
+
+        proxy_pass          http://127.0.0.1:8080;
+        proxy_set_header    Host            $host;
+        proxy_set_header    X-Real-IP       $remote_addr;
+        proxy_set_header    X-Forwarded-for $remote_addr;
+        port_in_redirect    off;
+        proxy_redirect      off;
+    }
+}
+
+server {
+  listen    80;
+  server_name {{ SERVICE_URL }};
+  add_header Strict-Transport-Security max-age=2592000;
+  return 301 https://{{ SERVICE_URL }}$request_uri;
+}
