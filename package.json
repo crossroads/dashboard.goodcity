@@ -9,7 +9,8 @@
     "build": "parcel build webapp/index.html --out-dir dist",
     "dev": "parcel webapp/index.html --out-dir dist",
     "package": "electron-packager .",
-    "package:win": "electron-packager . --platform=win32 --arch=x64"
+    "package:win": "electron-packager . --platform=win32 --arch=x64",
+    "test": "echo 'no tests set up'"
   },
   "dependencies": {},
   "devDependencies": {
