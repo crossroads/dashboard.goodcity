@@ -42,7 +42,6 @@ jobs:
     steps:
       - restore-cache: *restore-repo-cache
       - restore-cache: *restore-yarn-cache
-      - restore-cache: *restore-bower-cache
       - run:
           name: Run tests
           command: yarn test
@@ -52,7 +51,6 @@ jobs:
     steps:
       - restore-cache: *restore-repo-cache
       - restore-cache: *restore-yarn-cache
-      - restore-cache: *restore-bower-cache
       - run:
           command: |
             NODE_ENV=production yarn build
