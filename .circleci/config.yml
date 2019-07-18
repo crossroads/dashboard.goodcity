@@ -52,6 +52,7 @@ jobs:
       - restore-cache: *restore-repo-cache
       - restore-cache: *restore-yarn-cache
       - run:
+          name: Parcel build
           command: |
             NODE_ENV=production yarn build
       - persist_to_workspace:
@@ -73,7 +74,7 @@ jobs:
       - run:
           name: Copy files to Azure
           command: |
-            ./azcopy copy ./dist "$AZURE_STORAGE_URL" --recursive=true
+            ./azcopy copy ./dist "$AZURE_STORAGE_URL_PROD" --recursive=true
 
 workflows:
     version: 2
