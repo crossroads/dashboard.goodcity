@@ -54,7 +54,7 @@ jobs:
       - run:
           name: Parcel build
           command: |
-            NODE_ENV=production yarn build:azure
+            NODE_ENV=production yarn build
       - persist_to_workspace:
           root: .
           paths:
