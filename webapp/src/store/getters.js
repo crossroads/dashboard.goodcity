@@ -7,6 +7,10 @@ export default {
     return state.bookingTypes;
   },
 
+  authToken(state) {
+    return state.authToken;
+  },
+
   bookingTypeOf(state) {
     return order => {
       return _.find(state.bookingTypes, ['id', order.booking_type_id]);

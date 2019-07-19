@@ -21,6 +21,9 @@ const ClockPlugin = {
         dateString() {
           return this.now.format('MMMM Do');
         },
+        text() {
+          return this.dateString + ' ' + this.timeString;
+        },
         startOfDay() {
           return this.now.clone().startOf('day').toDate();
         },

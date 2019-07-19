@@ -1,7 +1,9 @@
 hasura/deployment/hosts.yml
+dist
+dashboard.goodcity-darwin-x64
+dashboard.goodcity-win32-x64
 
 # Logs
-dist
 .cache
 logs
 *.log

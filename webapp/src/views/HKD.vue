@@ -1,6 +1,6 @@
 <template>
   <div class='landing-page'>
-    <h1> {{ $clock.dateString }} {{ $clock.timeString }} </h1>
+    <h1> Hong Kong Distribution - {{ $clock.text }} </h1>
     <el-row :gutter="50">
 
       <!-- Timeline -->

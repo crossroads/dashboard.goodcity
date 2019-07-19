@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import config from '../config'
+import Store from '../store'
 import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
-import { split } from 'apollo-link'
+import { ApolloLink, concat, split } from 'apollo-link'
 import { WebSocketLink } from 'apollo-link-ws'
 import { getMainDefinition } from 'apollo-utilities'
 
@@ -19,7 +20,20 @@ const wsLink = new WebSocketLink({
   options: {
     reconnect: true,
   },
-})
+});
+
+const authMiddleware = new ApolloLink((operation, forward) => {
+  // add the authorization to the headers
+  const basicAuth = Store.getters.authToken;
+  if (basicAuth) {
+    operation.setContext({
+      headers: {
+        authorization: `Basic ${basicAuth}`,
+      }
+    });
+  }
+  return forward(operation);
+});
 
 // using the ability to split links, you can send data to each link
 // depending on what kind of operation is being sent
@@ -27,22 +41,21 @@ const link = split(
   // split based on operation type
   ({ query }) => {
     const { kind, operation } = getMainDefinition(query)
-    return kind === 'OperationDefinition' &&
-      operation === 'subscription'
+    return kind === 'OperationDefinition' && operation === 'subscription';
   },
   wsLink,
   httpLink
-)
+);
 
 // Create the apollo client
 export const apolloClient = new ApolloClient({
-  link,
+  link: concat(authMiddleware, link),
   cache: new InMemoryCache(),
   connectToDevTools: config.env.name !== "production"
-})
+});
 
 // Install the vue plugin like before
-Vue.use(VueApollo)
+Vue.use(VueApollo);
 
 export const apolloProvider = new VueApollo({
   defaultClient: apolloClient,
