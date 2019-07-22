@@ -10,13 +10,22 @@ import { getMainDefinition } from 'apollo-utilities'
 
 import VueApollo from 'vue-apollo'
 
+function injectCredentials(url) {
+  const username = localStorage.getItem('username');
+  const password = localStorage.getItem('password');
+  if (!username || !password) {
+    return url;
+  }
+  return url.replace('://', `://${username}:${password}@`);
+}
+
 const httpLink = new HttpLink({
   uri: config.endpoints.http
 });
 
 // Create the subscription websocket link
 const wsLink = new WebSocketLink({
-  uri: config.endpoints.ws,
+  uri: injectCredentials(config.endpoints.ws),
   options: {
     reconnect: true,
   },

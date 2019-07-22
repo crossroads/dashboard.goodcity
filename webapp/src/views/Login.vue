@@ -55,7 +55,7 @@ export default {
     login() {
       const redirectTo = _.get(this.$route, "query.redirect") || "/";
       this.$store.dispatch("authenticate", this.formData);
-      this.$router.push(redirectTo);
+      location.href = redirectTo;
     }
   }
 }

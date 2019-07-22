@@ -13,6 +13,8 @@ export default {
     const token = btoa(`${username}:${password}`);
     commit('setAuthToken', token);
     localStorage.setItem('authToken', token);
+    localStorage.setItem('username', username);
+    localStorage.setItem('password', password);
   }
 
 };
