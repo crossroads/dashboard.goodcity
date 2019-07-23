@@ -7,8 +7,12 @@ export default {
     return state.bookingTypes;
   },
 
-  authToken(state) {
-    return state.authToken;
+  authToken({ username, password }) {
+    return btoa(`${username}:${password}`);
+  },
+
+  isAuthenticated(state) {
+    return state.username && state.password;
   },
 
   bookingTypeOf(state) {
@@ -20,7 +24,7 @@ export default {
   typeOf(state, getters) {
     return order => {
       const bt = getters.bookingTypeOf(order);
-      return bt && bt.identifier === 'appointment' ? 
+      return bt && bt.identifier === 'appointment' ?
         TYPES.APPOINTMENT :
         TYPES.ONLINE_ORDER;
     }

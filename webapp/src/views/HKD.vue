@@ -48,6 +48,7 @@ import orderQuery               from '../queries/landing/orders'
 import OrderTimeline            from '../components/OrderTimeline'
 import OrderList                from '../components/OrderList'
 import { mapActions}            from 'vuex'
+import requireReload            from '../mixins/requireReload'
 import {
   STATES,
   ACTIVE_STATES,
@@ -55,6 +56,7 @@ import {
 } from '../constants'
 
 export default {
+  mixins: [requireReload],
   components: {
     OrderTimeline,
     OrderList

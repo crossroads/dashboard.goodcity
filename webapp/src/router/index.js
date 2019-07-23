@@ -7,7 +7,6 @@ import Store        from "../store";
 Vue.use(Router);
 
 const router = new Router({
-  mode: 'history',
   routes: [
     {
       path: "/hkd",
@@ -27,7 +26,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    const loggedIn = !!Store.getters.authToken;
+    const loggedIn = Store.getters.isAuthenticated;
     if (!loggedIn) {
       next({
         path: '/login',

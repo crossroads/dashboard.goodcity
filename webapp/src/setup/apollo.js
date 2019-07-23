@@ -10,6 +10,8 @@ import { getMainDefinition } from 'apollo-utilities'
 
 import VueApollo from 'vue-apollo'
 
+console.log("Setting up apollo");
+
 function injectCredentials(url) {
   const username = localStorage.getItem('username');
   const password = localStorage.getItem('password');

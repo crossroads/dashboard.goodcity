@@ -11,10 +11,7 @@ export default {
 
   async authenticate({ commit }, { username, password }) {
     const token = btoa(`${username}:${password}`);
-    commit('setAuthToken', token);
-    localStorage.setItem('authToken', token);
-    localStorage.setItem('username', username);
-    localStorage.setItem('password', password);
+    commit('setCredentials', { username, password });
   }
 
 };
