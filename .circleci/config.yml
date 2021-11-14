@@ -69,8 +69,7 @@ jobs:
       - run:
           name: Download AZCOPY
           command: |
-              wget -O azcopyv10.tar https://github.com/Azure/azure-storage-azcopy/archive/refs/tags/v10.13.0.tar.gz
-              tar -xf azcopyv10.tar --strip-components=1
+              wget -O azcopyv10.tar https://aka.ms/downloadazcopy-v10-linux && tar -xf azcopyv10.tar --strip-components=1
       - run:
           name: Copy files to Azure
           command: |
