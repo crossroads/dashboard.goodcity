@@ -1,4 +1,7 @@
-version: 2
+version: 2.1
+
+orbs:
+  azure-cli: circleci/azure-cli@1.1.0
 
 aliases:
   - defaults: &defaults
@@ -32,25 +35,16 @@ jobs:
   package_dependencies:
     <<: *defaults
     steps:
-      - restore-cache: *restore-repo-cache
-      - restore-cache: *restore-yarn-cache
+      - restore_cache: *restore-repo-cache
+      - restore_cache: *restore-yarn-cache
       - run: *yarn
-      - save-cache: *save-yarn-cache
-
-  test_cases:
-    <<: *defaults
-    steps:
-      - restore-cache: *restore-repo-cache
-      - restore-cache: *restore-yarn-cache
-      - run:
-          name: Run tests
-          command: yarn test
+      - save_cache: *save-yarn-cache
 
   www_build:
     <<: *defaults
     steps:
-      - restore-cache: *restore-repo-cache
-      - restore-cache: *restore-yarn-cache
+      - restore_cache: *restore-repo-cache
+      - restore_cache: *restore-yarn-cache
       - run:
           name: Parcel build
           command: |
@@ -63,33 +57,28 @@ jobs:
   www-deploy:
     <<: *defaults
     steps:
-      - restore-cache: *restore-repo-cache
+      - restore_cache: *restore-repo-cache
       - attach_workspace:
           at: ~/code
-      - run:
-          name: Download AZCOPY
-          command: |
-              wget -O azcopyv10.tar https://aka.ms/downloadazcopy-v10-linux && tar -xf azcopyv10.tar --strip-components=1
+      - azure-cli/install
+      - azure-cli/login-with-service-principal
       - run:
           name: Copy files to Azure
           command: |
-            ./azcopy sync ./dist "$AZURE_STORAGE_URL_PROD" --recursive=true --delete-destination=true
+            az storage blob upload-batch -s ./dist -d '$web/dashboard-goodcity' --account-name goodcitystorage
+            az storage blob delete-batch -s '$web'  --account-name goodcitystorage --pattern 'dashboard-goodcity/*' --if-unmodified-since `date -u -d "1 hour ago" '+%Y-%m-%dT%H:%MZ'`
 
 workflows:
     version: 2
     build_and_bundle:
       jobs:
-        - checkout_code
+        - checkout_code 
         - package_dependencies:
             requires:
               - checkout_code
-        - test_cases:
-            requires:
-              - package_dependencies
         - www_build:
             requires:
               - package_dependencies
-              - test_cases
             filters:
               branches:
                 only: /^(master)$/
