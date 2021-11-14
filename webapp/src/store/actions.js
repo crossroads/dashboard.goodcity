@@ -1,5 +1,4 @@
 
-import bookingTypesQuery  from '../queries/bookingTypes.gql'
 import * as api from '../services/goodcity'
 
 export default {
