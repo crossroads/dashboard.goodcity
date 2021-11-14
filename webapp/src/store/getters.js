@@ -7,12 +7,12 @@ export default {
     return state.bookingTypes;
   },
 
-  authToken({ username, password }) {
-    return btoa(`${username}:${password}`);
+  authToken({ authToken }) {
+    return authToken;
   },
 
   isAuthenticated(state) {
-    return state.username && state.password;
+    return !!state.authToken
   },
 
   bookingTypeOf(state) {

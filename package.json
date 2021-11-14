@@ -7,20 +7,19 @@
   "license": "MIT",
   "scripts": {
     "build": "parcel build webapp/index.html --out-dir dist --public-url './'",
-    "dev": "parcel webapp/index.html --out-dir dist",
+    "dev": "parcel webapp/index.html --out-dir dist --port 4203",
     "package": "electron-packager .",
     "package:win": "electron-packager . --platform=win32 --arch=x64",
     "test": "echo 'no tests set up'"
   },
-  "dependencies": {},
+  "dependencies": {
+    "axios": "^0.24.0"
+  },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.15",
     "@fortawesome/free-solid-svg-icons": "^5.7.2",
     "@fortawesome/vue-fontawesome": "^0.1.5",
     "@vue/component-compiler-utils": "^2.5.0",
-    "apollo-boost": "^0.3.1",
-    "apollo-link-ws": "^1.0.17",
-    "apollo-utilities": "^1.2.1",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
     "babel-runtime": "^6.26.0",
@@ -28,6 +27,7 @@
     "electron-packager": "^14.0.0",
     "element-ui": "^2.7.2",
     "graphql": "^14.2.1",
+    "graphql-tag": "^2.12.6",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.23",
@@ -35,7 +35,6 @@
     "sass": "^1.17.4",
     "subscriptions-transport-ws": "^0.9.16",
     "vue": "^2.6.10",
-    "vue-apollo": "^3.0.0-beta.28",
     "vue-hot-reload-api": "^2.3.1",
     "vue-router": "^3.0.2",
     "vue-template-compiler": "^2.5.22",

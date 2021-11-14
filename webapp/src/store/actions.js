@@ -1,17 +1,15 @@
 
 import bookingTypesQuery  from '../queries/bookingTypes.gql'
-import { apolloClient }   from "../setup/apollo"
+import * as api from '../services/goodcity'
 
 export default {
 
   async loadBookingTypes({ commit }) {
-    const { data } = await apolloClient.query({ query: bookingTypesQuery })
-    commit('saveBookingTypes', data.booking_types);
+    commit('saveBookingTypes', await api.loadBookingTypes());
   },
 
-  async authenticate({ commit }, { username, password }) {
-    const token = btoa(`${username}:${password}`);
-    commit('setCredentials', { username, password });
+  async authenticate({ commit }, { authToken }) {
+    commit('setCredentials', { authToken });
   }
 
 };

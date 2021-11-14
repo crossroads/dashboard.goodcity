@@ -11,7 +11,8 @@ const ClockPlugin = {
       data() {
         console.log(moment().tz("Asia/Hong_Kong").format('hh:mm A'));
         return {
-          now: moment().tz("Asia/Hong_Kong")
+          now: moment().tz("Asia/Hong_Kong"),
+          schedules: []
         }
       },
       computed: {
@@ -34,12 +35,25 @@ const ClockPlugin = {
       methods: {
         update() {
           this.now = moment().tz("Asia/Hong_Kong");
+        },
+
+        schedule(fn) {
+          this.schedules.push(fn);
+          return {
+            clear: () => {
+              // cleanup
+              this.schedules = this.schedules.filter(f => f === fn);
+            }
+          }
         }
       },
       created() {
         setTimeout(() => {
             this.update();
-            setInterval(() => this.update(), minute);
+            setInterval(() => {
+              this.update()
+              this.schedules.forEach(fn => fn())
+            }, minute);
           },
           (60 - this.now.seconds()) * second // seconds to 60
         );

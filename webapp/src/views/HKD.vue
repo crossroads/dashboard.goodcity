@@ -44,14 +44,13 @@
 
 <script>
 import _                        from 'lodash'
-import orderQuery               from '../queries/landing/orders'
 import OrderTimeline            from '../components/OrderTimeline'
 import OrderList                from '../components/OrderList'
 import { mapActions}            from 'vuex'
 import requireReload            from '../mixins/requireReload'
+import { loadOrders }           from '../services/goodcity'
 import {
   STATES,
-  ACTIVE_STATES,
   UNCONFIRMED_STATES
 } from '../constants'
 
@@ -61,8 +60,17 @@ export default {
     OrderTimeline,
     OrderList
   },
-  mounted() {
-    this.loadBookingTypes();
+  async mounted() {
+    await this.loadBookingTypes();
+    await this.refresh();
+
+    this.schedule = this.$clock.schedule(() => {
+      console.log('polling');
+      this.refresh();
+    });
+  },
+  beforeDestroy() {
+    this.schedule.clear();
   },
   methods: {
     ...mapActions([ 'loadBookingTypes' ]),
@@ -73,19 +81,16 @@ export default {
 
     isUnconfirmed(order) {
       return _.includes(UNCONFIRMED_STATES, order.state);
+    },
+
+    async refresh() {
+      this.orders = await loadOrders();
     }
   },
-  apollo: {
-    $loadingKey: 'loading',
-    orders: orderQuery.build({
-      variables: function () {
-        return {
-          after: this.$clock.startOfDay,
-          before: this.$clock.endOfDay
-        }
-      }
-    })
-  },
+  data: () => ({
+    orders: [],
+    schedule: null
+  }),
   computed: {
     unconfirmedOrders() {
       return _.filter(this.orders, o => this.isUnconfirmed(o));

@@ -3,10 +3,8 @@ export default {
     state.bookingTypes = bookingTypes;;
   },
 
-  setCredentials(state, { username, password }) {
-    state.username = username;
-    state.password = password;
-    localStorage.setItem('username', username);
-    localStorage.setItem('password', password);
+  setCredentials(state, { authToken }) {
+    localStorage.setItem('authToken', authToken);
+    state.authToken = authToken;
   }
 };

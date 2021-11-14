@@ -4,9 +4,6 @@ import store      from "./store";
 import App        from './App'
 import Clock      from './plugins/clock'
 import moment     from 'moment-timezone'
-import {
-  apolloProvider
-} from './setup/apollo'
 
 import './styles/global.scss'
 import './filters'
@@ -20,6 +17,5 @@ Vue.use(Clock);
 new Vue({
     router,
     store,
-    apolloProvider,
     render: h => h(App)
 }).$mount("#app");

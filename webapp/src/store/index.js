@@ -8,8 +8,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    username: localStorage.getItem('username'),
-    password: localStorage.getItem('password'),
+    authToken: localStorage.getItem('authToken'),
     bookingTypes: []
   },
   getters,

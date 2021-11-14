@@ -17,14 +17,9 @@
         label-width="80px"
         class="login-form"
       >
-        <!-- Username Input -->
-        <el-form-item label="Username" prop="username">
-          <el-input v-model="formData.username"></el-input>
-        </el-form-item>
-
-        <!-- Password Input -->
-        <el-form-item label="Password" prop="password">
-          <el-input type="password" v-model="formData.password" autocomplete="off"></el-input>
+        <!-- Auth Input -->
+        <el-form-item label="Token" prop="authToken">
+          <el-input v-model="formData.authToken"></el-input>
         </el-form-item>
 
         <!-- Submit -->
@@ -46,8 +41,7 @@ export default {
   data() {
     return {
       formData: {
-        username: '',
-        password: ''
+        authToken: ''
       }
     }
   },

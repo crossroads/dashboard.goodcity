@@ -75,15 +75,16 @@
         return _.includes(this.columns, col);
       },
       isAppointment(order) {
-        bookingTypes
+        return this.$store.getters.isAppointment(order);
       },
       itemCount(order) {
         const isAppt = this.$store.getters.isAppointment(order);
-        const prop = isAppt ?
-          'goodcity_requests_aggregate'
-          : 'orders_packages_aggregate';
 
-        return order[prop].aggregate.count;
+        if (isAppt) {
+          return order.goodcity_requests.length;
+        }
+
+        return order.orders_packages.length;
       },
       orderType(order) {
         const isAppt = this.$store.getters.isAppointment(order);

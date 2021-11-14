@@ -7,8 +7,7 @@ const ENV = process.env.NODE_ENV || 'development';
 
 const DEFAULT_CONFIG = {
   endpoints: {
-    http: 'http://localhost:8080/v1alpha1/graphql',
-    ws: 'ws://localhost:8080/v1alpha1/graphql',
+    http: 'http://localhost:3000',
   },
   env: {
     name: ENV,
