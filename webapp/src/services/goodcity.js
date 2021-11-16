@@ -10,7 +10,7 @@ const apiHeaders = () => ({
   "accept": "application/json",
   "cache-control": "no-cache",
   "Authorization": `Bearer ${store.getters.authToken}`,
-  "x-goodcity-app-name": "stock .goodcity",
+  "x-goodcity-app-name": "stock.goodcity",
   "page_size": 1000
 });
 
