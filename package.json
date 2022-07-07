@@ -27,7 +27,7 @@
     "electron-packager": "^14.0.0",
     "element-ui": "^2.7.2",
     "lodash": "^4.17.11",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "moment-timezone": "^0.5.23",
     "parcel-bundler": "^1.12.3",
     "sass": "^1.17.4",
