@@ -65,7 +65,7 @@ jobs:
       - run:
           name: Copy files to Azure
           command: |
-            az storage blob upload-batch -s ./dist -d '$web/dashboard-goodcity' --account-name goodcitystorage
+            az storage blob upload-batch -s ./dist -d '$web/dashboard-goodcity' --account-name goodcitystorage --overwrite
             az storage blob delete-batch -s '$web'  --account-name goodcitystorage --pattern 'dashboard-goodcity/*' --if-unmodified-since `date -u -d "1 hour ago" '+%Y-%m-%dT%H:%MZ'`
 
 workflows:
