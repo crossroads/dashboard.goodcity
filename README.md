@@ -6,10 +6,8 @@
 ## Building the project
 
 ```bash
+nvm install v18.17.1
 yarn install
-```
-
-```bash
 yarn build
 ```
 
@@ -18,3 +16,9 @@ yarn build
 ```bash
 yarn dev
 ```
+
+## Deploying the project
+
+* Commit to git
+* CircleCI will build the project on master and live branches
+* Deployment: push to live branch for live deployment (CircleCI will deploy to an Azure Storage Blob set up for hosting static content.)
