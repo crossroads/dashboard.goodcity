@@ -34,7 +34,8 @@ export async function loadOrders() {
   let { data } = await client.get('/api/v1/orders', {
     params: {
       after: start.getTime(),
-      before: end.getTime()
+      before: end.getTime(),
+      type: 'appointment,online_orders'
     },
     headers: apiHeaders()
   });
